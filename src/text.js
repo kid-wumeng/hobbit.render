@@ -75,6 +75,7 @@ TextStream.prototype.lineEnd = ( lineWidth ) =>
          this.cursor++
          break
       }
+
       else{
          width += next
          this.cursor++
@@ -90,6 +91,7 @@ TextStream.prototype.peek = () =>
 
    if(ch)
       return measureCharWidth(ch)
+
    else{
       this.eof = true
       return 0

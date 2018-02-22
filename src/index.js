@@ -2,9 +2,10 @@
 
 
 exports.THREE      = require('three')
+exports.Helper     = require('./Helper')
 exports.CharParser = require('./CharParser'),
 exports.TextStream = require('./TextStream')
-exports.Helper     = require('./Helper')
+exports.Painter    = require('./Painter')
 
 
 if ( window ) {

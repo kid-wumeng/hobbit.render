@@ -4,7 +4,7 @@
 module.exports = class TextStream {
 
 
-   constructor( charParser, text )
+   constructor({ charParser, text })
    {
       this.charParser = charParser
       this.text       = text

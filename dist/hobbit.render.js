@@ -45988,10 +45988,25 @@ module.exports = class Helper {
 "use strict"
 
 
+module.exports = class Painter {
+
+
+   constructor({ THREE, canvas })
+   {
+      this.THREE  = THREE
+      this.canvas = canvas
+   }
+
+
+}
+},{}],5:[function(require,module,exports){
+"use strict"
+
+
 module.exports = class TextStream {
 
 
-   constructor( charParser, text )
+   constructor({ charParser, text })
    {
       this.charParser = charParser
       this.text       = text
@@ -46067,17 +46082,18 @@ module.exports = class TextStream {
       }
    }
 }
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict"
 
 
 exports.THREE      = require('three')
+exports.Helper     = require('./Helper')
 exports.CharParser = require('./CharParser'),
 exports.TextStream = require('./TextStream')
-exports.Helper     = require('./Helper')
+exports.Painter    = require('./Painter')
 
 
 if ( window ) {
    Object.assign(window, exports)
 }
-},{"./CharParser":2,"./Helper":3,"./TextStream":4,"three":1}]},{},[5]);
+},{"./CharParser":2,"./Helper":3,"./Painter":4,"./TextStream":5,"three":1}]},{},[6]);

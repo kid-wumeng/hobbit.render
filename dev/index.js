@@ -8,7 +8,7 @@ function done ( text )
 {
    const helper     = new Helper
    const charParser = new CharParser
-   const textStream = new TextStream( charParser, text )
+   const textStream = new TextStream({ charParser, text })
 
    helper.start()
 

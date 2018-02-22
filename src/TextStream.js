@@ -4,7 +4,7 @@
 module.exports = class TextStream {
 
 
-   constructor( charParser, text )
+   constructor ( charParser, text )
    {
       this.charParser = charParser
       this.text       = text
@@ -24,7 +24,7 @@ module.exports = class TextStream {
 
 
 
-   lineSlice( lineWidth = 0 )
+   lineSlice ( lineWidth = 0 )
    {
       const start = this.cursor
 
@@ -43,7 +43,6 @@ module.exports = class TextStream {
 
    lineEnd ( lineWidth )
    {
-
       let width = 0
       let next  = 0
 

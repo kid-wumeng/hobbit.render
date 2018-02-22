@@ -3,7 +3,7 @@
 
 
 const canvas = document.createElement( 'canvas' )
-const ctx = canvas.getContext( '2d' )
+const ctx    = canvas.getContext( '2d' )
 
 
 
@@ -68,7 +68,7 @@ TextStream.prototype.lineEnd = ( lineWidth ) =>
 
       next = this.peek()
 
-      if( this.eof ) break
+      if( this.eof )                 break
       if( width + next > lineWidth ) break
 
       if( width + next === lineWidth ){

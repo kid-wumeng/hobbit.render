@@ -90,9 +90,9 @@ TextStream.prototype.peek = () =>
 {
    const ch = this.text[this.cursor+1]
 
-   if(ch)
+   if(ch){
       return measureCharWidth(ch)
-
+   }
    else{
       this.eof = true
       return 0

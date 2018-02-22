@@ -16,4 +16,6 @@ function done ( text )
    console.log( textStream.lines )
 
    helper.end()
+
+   console.log(THREE);
 }

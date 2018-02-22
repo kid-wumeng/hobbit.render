@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 
 
 module.exports = class CharParser {
@@ -7,6 +7,7 @@ module.exports = class CharParser {
    {
       this.ctx = document.createElement('canvas').getContext('2d')
    }
+
 
    measure( ch, font='30px serif' )
    {

@@ -45,7 +45,7 @@ module.exports = class TextStream {
       let width = 0
       let next  = 0
 
-      while( true ){
+      while(true){
 
          next = this.peek()
 
@@ -71,7 +71,7 @@ module.exports = class TextStream {
    {
       const ch = this.text[this.cursor+1]
 
-      if( ch )
+      if(ch)
          return this.charParser.measure(ch)
 
       else{
@@ -79,5 +79,4 @@ module.exports = class TextStream {
          return 0
       }
    }
-
 }

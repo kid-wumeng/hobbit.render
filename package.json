@@ -1,0 +1,16 @@
+{
+  "name": "hobbit.render",
+  "version": "0.1.0",
+  "author": "KID",
+  "scripts": {
+    "build": "gulp build",
+    "dev": "gulp dev"
+  },
+  "devDependencies": {
+    "browserify": "^16.1.0",
+    "colors": "^1.1.2",
+    "gulp": "^3.9.1",
+    "http-server": "^0.11.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}

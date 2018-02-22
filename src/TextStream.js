@@ -4,7 +4,7 @@
 module.exports = class TextStream {
 
 
-   constructor ( charParser, text )
+   constructor( charParser, text )
    {
       this.charParser = charParser
       this.text       = text
@@ -16,7 +16,7 @@ module.exports = class TextStream {
 
 
 
-   lineAll ()
+   lineAll()
    {
       while ( !this.eof )
          this.lineSlice(1000)
@@ -24,7 +24,7 @@ module.exports = class TextStream {
 
 
 
-   lineSlice ( lineWidth = 0 )
+   lineSlice( lineWidth = 0 )
    {
       const start = this.cursor
 
@@ -41,12 +41,12 @@ module.exports = class TextStream {
 
 
 
-   lineEnd ( lineWidth )
+   lineEnd( lineWidth )
    {
       let width = 0
       let next  = 0
 
-      while ( true )
+      while(true)
       {
          next = this.peek()
 
@@ -66,11 +66,11 @@ module.exports = class TextStream {
 
 
 
-   peek ()
+   peek()
    {
       const ch = this.text[this.cursor+1]
 
-      if ( ch )
+      if( ch )
          return this.charParser.measure(ch)
 
       else {

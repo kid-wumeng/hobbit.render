@@ -1,18 +1,18 @@
 module.exports = class Helper {
 
-   constructor ()
+   constructor()
    {
       this.startTime = 0
    }
 
 
-   start ()
+   start()
    {
       this.startTime = Date.now()
    }
 
 
-   end ()
+   end()
    {
       console.log( Date.now() - this.startTime )
    }

@@ -29,7 +29,8 @@ module.exports = class TextStream {
 
       this.lineEnd( lineWidth )
 
-      if( !this.eof ){
+      if( !this.eof )
+      {
          const end  = this.cursor
          const line = this.text.slice( start, end )
 
@@ -48,11 +49,11 @@ module.exports = class TextStream {
 
          next = this.peek()
 
-         if ( this.eof ) break
+         if( this.eof ) break
 
-         if ( width + next > lineWidth ) break
+         if( width + next > lineWidth ) break
 
-         if ( width + next === lineWidth ) {
+         if( width + next === lineWidth ){
             this.cursor++
             break
          }

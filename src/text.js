@@ -23,7 +23,7 @@ function measureCharWidth( ch, font='30px serif' )
 
 class TextStream
 {
-   constructor({ text })
+   constructor( text )
    {
       this.text   = text
       this.cursor = 0
@@ -86,12 +86,12 @@ TextStream.prototype.lineEnd = ( lineWidth ) =>
 
 
 
-TextStream.prototype.peek()
+TextStream.prototype.peek = () =>
 {
    const ch = this.text[this.cursor+1]
 
-   if( ch )
-      return measureCharWidth( ch )
+   if(ch)
+      return measureCharWidth(ch)
 
    else{
       this.eof = true

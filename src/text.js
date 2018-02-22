@@ -7,11 +7,9 @@ const ctx = canvas.getContext( '2d' )
 
 
 
-/**
- * @param  { string } ch
- * @param  { string } font
- * @return { number } width
- */
+// @param  { string } ch
+// @param  { string } font
+// @return { number } width
 
 function measureCharWidth( ch, font='30px serif' )
 {
@@ -23,6 +21,8 @@ function measureCharWidth( ch, font='30px serif' )
 
 class TextStream
 {
+   // @param { string } text
+
    constructor( text )
    {
       this.text   = text
@@ -69,16 +69,16 @@ TextStream.prototype.lineEnd = ( lineWidth ) =>
       next = this.peek()
 
       if( this.eof ) break
-
       if( width + next > lineWidth ) break
 
       if( width + next === lineWidth ){
          this.cursor++
          break
       }
-
-      width += next
-      this.cursor++
+      else{
+         width += next
+         this.cursor++
+      }
    }
 }
 
@@ -88,9 +88,8 @@ TextStream.prototype.peek = () =>
 {
    const ch = this.text[this.cursor+1]
 
-   if(ch){
+   if(ch)
       return measureCharWidth(ch)
-   }
    else{
       this.eof = true
       return 0

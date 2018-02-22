@@ -41,12 +41,13 @@ module.exports = class TextStream {
 
 
 
-   lineEnd ( lineWidth ) {
-      
+   lineEnd ( lineWidth )
+   {
+
       let width = 0
       let next  = 0
 
-      while (true)
+      while( true )
       {
          next = this.peek()
 

@@ -77,10 +77,8 @@ TextStream.prototype.lineEnd = ( lineWidth ) =>
          break
       }
 
-      else{
-         width += next
-         this.cursor++
-      }
+      width += next
+      this.cursor++
    }
 }
 

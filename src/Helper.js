@@ -1,3 +1,6 @@
+'use strict'
+
+
 module.exports = class Helper {
 
    constructor()
@@ -5,12 +8,10 @@ module.exports = class Helper {
       this.startTime = 0
    }
 
-
    start()
    {
       this.startTime = Date.now()
    }
-
 
    end()
    {

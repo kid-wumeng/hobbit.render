@@ -1,8 +1,7 @@
-"use strict"
+'use strict'
 
 
 module.exports = class TextStream {
-
 
    constructor ( charParser, text )
    {
@@ -14,15 +13,11 @@ module.exports = class TextStream {
       this.a = 1
    }
 
-
-
    lineAll()
    {
       while ( !this.eof )
          this.lineSlice(1000)
    }
-
-
 
    lineSlice ( lineWidth = 0 )
    {
@@ -39,8 +34,6 @@ module.exports = class TextStream {
       }
    }
 
-
-
    lineEnd ( lineWidth )
    {
       let width = 0
@@ -51,22 +44,17 @@ module.exports = class TextStream {
          next = this.peek()
 
          if ( this.eof ) break
-
          if ( width + next > lineWidth ) break
-
          if ( width + next === lineWidth ) {
             this.cursor++
             break
          }
-
          else {
             width += next
             this.cursor++
          }
       }
    }
-
-
 
    peek()
    {

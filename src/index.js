@@ -1,3 +1,6 @@
+'use strict'
+
+
 exports.CharParser = require('./CharParser'),
 exports.TextStream = require('./TextStream')
 exports.Helper     = require('./Helper')

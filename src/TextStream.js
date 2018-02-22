@@ -46,7 +46,7 @@ module.exports = class TextStream {
       let width = 0
       let next  = 0
 
-      while(true)
+      while ( true )
       {
          next = this.peek()
 
@@ -59,8 +59,10 @@ module.exports = class TextStream {
             break
          }
 
-         width += next
-         this.cursor++
+         else {
+            width += next
+            this.cursor++
+         }
       }
    }
 

@@ -45944,156 +45944,309 @@
 })));
 
 },{}],2:[function(require,module,exports){
-"use strict"
+const THREE = require('three')
 
 
-module.exports = class CharParser {
 
-   constructor()
+class Box
+{
+   constructor ( opt = {} )
    {
-      this.ctx = document.createElement('canvas').getContext('2d')
-   }
+      const defaultOpt = {
+      }
 
+      opt = Object.assign( defaultOpt, opt )
 
-   measure( ch, font='30px serif' )
-   {
-      this.ctx.font = font
-      return this.ctx.measureText(ch).width
-   }
-}
-},{}],3:[function(require,module,exports){
-"use strict"
-
-
-module.exports = class Helper {
-
-   constructor()
-   {
-      this.startTime = 0
-   }
-
-
-   start()
-   {
-      this.startTime = Date.now()
-   }
-
-
-   end()
-   {
-      console.log( Date.now() - this.startTime )
+      this.opt      = opt
+      this.geometry = this.createGeometry( opt )
+      this.material = this.createMaterial( opt )
    }
 }
-},{}],4:[function(require,module,exports){
-"use strict"
 
 
-module.exports = class Painter {
+
+Box.prototype.get = function ( opt )
+{
+   return new THREE.Mesh( this.geometry, this.material )
+}
 
 
-   constructor({ THREE, canvas })
+
+Box.prototype.createGeometry = function ( opt )
+{
+   const geometry = new THREE.BoxGeometry( 1, 1, 1 )
+   return geometry
+}
+
+
+
+Box.prototype.createMaterial = function ( opt )
+{
+   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+   material.transparent = true
+   material.wireframe = true
+   return material
+}
+
+
+
+module.exports = Box
+},{"three":1}],3:[function(require,module,exports){
+const THREE = require('three')
+const Box   = require('./Box')
+
+
+
+class Painter
+{
+   constructor ( opt = {} )
    {
-      this.THREE  = THREE
-      this.canvas = canvas
+      const defaultOpt = {
+         canvasWidth:  0,
+         canvasHeight: 0,
+         pixelRatio:   1
+      }
+
+      opt = Object.assign( defaultOpt, opt )
+
+      this.opt      = opt
+      this.canvas   = this.createCanvas( opt )
+      this.scene    = this.createScene( opt )
+      this.camera   = this.createCamera( opt )
+      this.renderer = this.createRenderer( opt )
    }
+}
 
 
+
+
+Painter.prototype.createCanvas = function ( opt )
+{
+   const canvas = document.createElement( 'canvas' )
+
+   canvas.width  = opt.canvasWidth
+   canvas.height = opt.canvasHeight
+
+   document.body.appendChild( canvas )
+
+   return canvas
+}
+
+
+
+Painter.prototype.createScene = function ( opt )
+{
+   const scene = new THREE.Scene()
+   return scene
+}
+
+
+
+Painter.prototype.createCamera = function ( opt )
+{
+   const fov    = 45
+   const aspect = opt.canvasWidth / opt.canvasHeight
+   const near   = 1
+   const far    = 1000
+
+   const camera = new THREE.PerspectiveCamera( fov, aspect, near, far )
+
+   camera.position.z = 5
+
+   return camera
+}
+
+
+
+Painter.prototype.createRenderer = function ( opt )
+{
+   const renderer = new THREE.WebGLRenderer({
+      canvas: this.canvas,
+      antialias: true
+   })
+
+   renderer.setSize( opt.canvasWidth, opt.canvasHeight )
+   renderer.setPixelRatio( opt.pixelRatio )
+
+   return renderer
+}
+
+
+
+Painter.prototype.paint = function ()
+{
+   this.renderer.render( this.scene, this.camera )
+}
+
+
+
+Painter.prototype.paintShape = function ()
+{
+   const box = new Box
+   this.scene.add(box.get())
+   this.paint()
+}
+
+
+
+module.exports = Painter
+},{"./Box":2,"three":1}],4:[function(require,module,exports){
+let startTimeStamp = 0
+
+
+
+exports.start = () =>
+{
+   startTimeStamp = Date.now()
+}
+
+
+
+exports.end = () =>
+{
+   console.log( Date.now() - startTimeStamp )
 }
 },{}],5:[function(require,module,exports){
 "use strict"
 
 
-module.exports = class TextStream {
-
-
-   constructor({ charParser, text })
-   {
-      this.charParser = charParser
-      this.text       = text
-      this.cursor     = 0
-      this.lines      = []
-      this.eof        = false
-   }
-
-
-
-   lineAll()
-   {
-      while( !this.eof )
-         this.lineSlice(1000)
-   }
-
-
-
-   lineSlice( lineWidth = 0 )
-   {
-      const start = this.cursor
-
-      this.lineEnd( lineWidth )
-
-      if( !this.eof )
-      {
-         const end  = this.cursor
-         const line = this.text.slice( start, end )
-
-         this.lines.push( line )
-      }
-   }
-
-
-
-   lineEnd( lineWidth )
-   {
-      let width = 0
-      let next  = 0
-
-      while(true){
-
-         next = this.peek()
-
-         if( this.eof ) break
-
-         if( width + next > lineWidth ) break
-
-         if( width + next === lineWidth ){
-            this.cursor++
-            break
-         }
-
-         else{
-            width += next
-            this.cursor++
-         }
-      }
-   }
-
-
-
-   peek()
-   {
-      const ch = this.text[this.cursor+1]
-
-      if(ch)
-         return this.charParser.measure(ch)
-
-      else{
-         this.eof = true
-         return 0
-      }
-   }
-}
-},{}],6:[function(require,module,exports){
-"use strict"
-
-
-exports.THREE      = require('three')
-exports.Helper     = require('./Helper')
-exports.CharParser = require('./CharParser'),
-exports.TextStream = require('./TextStream')
-exports.Painter    = require('./Painter')
+exports.THREE   = require('three')
+exports.helper  = require('./helper')
+exports.text    = require('./text')
+exports.Painter = require('./Painter')
 
 
 if ( window ) {
    Object.assign(window, exports)
 }
-},{"./CharParser":2,"./Helper":3,"./Painter":4,"./TextStream":5,"three":1}]},{},[6]);
+},{"./Painter":3,"./helper":4,"./text":6,"three":1}],6:[function(require,module,exports){
+const canvas = document.createElement( 'canvas' )
+const ctx    = canvas.getContext( '2d' )
+
+
+
+////////////////////////////////////////
+//
+// Use the HTML5 Canvas to measure the width of a char
+// 利用 HTML5 Canvas 策略一个字符的宽度
+//
+// @params {string} ch
+// @params {string} font
+// @return {number} width
+//
+////////////////////////////////////////
+
+function measureCharWidth( ch, font='30px serif' )
+{
+   ctx.font = font
+   return ctx.measureText(ch).width
+}
+
+
+
+////////////////////////////////////////
+//
+// @params {string} text
+//
+////////////////////////////////////////
+
+class TextStream
+{
+   constructor( text )
+   {
+      this.text   = text
+      this.cursor = 0
+      this.lines  = []
+      this.eof    = false
+   }
+}
+
+
+
+TextStream.prototype.lineAll = function()
+{
+   while( !this.eof )
+      this.lineSlice(1000)
+}
+
+
+
+////////////////////////////////////////
+// @params {number} lineWidth
+////////////////////////////////////////
+
+TextStream.prototype.lineSlice = function( lineWidth = 0 )
+{
+   const start = this.cursor
+
+   this.lineEnd( lineWidth )
+
+   if( !this.eof )
+   {
+      const end  = this.cursor
+      const line = this.text.slice( start, end )
+
+      this.lines.push( line )
+   }
+}
+
+
+
+////////////////////////////////////////
+// 给定行宽，游标运动，直到本行正好塞完（若再塞一个就超过）
+//
+// @params {number} lineWidth
+////////////////////////////////////////
+
+TextStream.prototype.lineEnd = function( lineWidth )
+{
+   let width = 0
+   let next  = 0
+
+   while( true )
+   {
+      next = this.peek()
+
+      if( this.eof ) break
+
+      if( width + next > lineWidth ) break
+
+      if( width + next === lineWidth ){
+         this.cursor++
+         break
+      }
+
+      else{
+         width += next
+         this.cursor++
+      }
+   }
+}
+
+
+////////////////////////////////////////
+//
+// Peek the next char's width, if end, this.eof = true
+// 预读下一个字符的宽度，如果到底了，则置eof为true
+//
+// @return {number} nextCharWidth
+//
+////////////////////////////////////////
+
+TextStream.prototype.peek = function()
+{
+   const ch = this.text[this.cursor+1]
+
+   if(ch)
+      return measureCharWidth(ch)
+
+   else{
+      this.eof = true
+      return 0
+   }
+}
+
+
+
+exports.TextStream = TextStream
+},{}]},{},[5]);

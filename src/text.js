@@ -1,15 +1,18 @@
-"use strict"
-
-
-
 const canvas = document.createElement( 'canvas' )
 const ctx    = canvas.getContext( '2d' )
 
 
 
-// @param  { string } ch
-// @param  { string } font
-// @return { number } width
+////////////////////////////////////////
+//
+// Use the HTML5 Canvas to measure the width of a char
+// 利用 HTML5 Canvas 策略一个字符的宽度
+//
+// @params {string} ch
+// @params {string} font
+// @return {number} width
+//
+////////////////////////////////////////
 
 function measureCharWidth( ch, font='30px serif' )
 {
@@ -19,10 +22,14 @@ function measureCharWidth( ch, font='30px serif' )
 
 
 
+////////////////////////////////////////
+//
+// @params {string} text
+//
+////////////////////////////////////////
+
 class TextStream
 {
-   // @param { string } text
-
    constructor( text )
    {
       this.text   = text
@@ -34,7 +41,7 @@ class TextStream
 
 
 
-TextStream.prototype.lineAll = () =>
+TextStream.prototype.lineAll = function()
 {
    while( !this.eof )
       this.lineSlice(1000)
@@ -42,7 +49,11 @@ TextStream.prototype.lineAll = () =>
 
 
 
-TextStream.prototype.lineSlice = ( lineWidth = 0 ) =>
+////////////////////////////////////////
+// @params {number} lineWidth
+////////////////////////////////////////
+
+TextStream.prototype.lineSlice = function( lineWidth = 0 )
 {
    const start = this.cursor
 
@@ -59,16 +70,23 @@ TextStream.prototype.lineSlice = ( lineWidth = 0 ) =>
 
 
 
-TextStream.prototype.lineEnd = ( lineWidth ) =>
+////////////////////////////////////////
+// 给定行宽，游标运动，直到本行正好塞完（若再塞一个就超过）
+//
+// @params {number} lineWidth
+////////////////////////////////////////
+
+TextStream.prototype.lineEnd = function( lineWidth )
 {
    let width = 0
    let next  = 0
 
-   while(true){
-
+   while( true )
+   {
       next = this.peek()
 
-      if( this.eof )                 break
+      if( this.eof ) break
+
       if( width + next > lineWidth ) break
 
       if( width + next === lineWidth ){
@@ -84,8 +102,16 @@ TextStream.prototype.lineEnd = ( lineWidth ) =>
 }
 
 
+////////////////////////////////////////
+//
+// Peek the next char's width, if end, this.eof = true
+// 预读下一个字符的宽度，如果到底了，则置eof为true
+//
+// @return {number} nextCharWidth
+//
+////////////////////////////////////////
 
-TextStream.prototype.peek = () =>
+TextStream.prototype.peek = function()
 {
    const ch = this.text[this.cursor+1]
 
@@ -97,3 +123,7 @@ TextStream.prototype.peek = () =>
       return 0
    }
 }
+
+
+
+exports.TextStream = TextStream
